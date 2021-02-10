@@ -1,5 +1,6 @@
 #  sopvo
 ## 
+This project has been move to: https://github.com/arclab-hku/SOPVO
 
 ### 1-Demo Video
 
@@ -8,8 +9,6 @@
 ### 2-Relevent Publication:
 
 Paper Link: TBD
-
-Project link: https://bitbucket.org/arclabadmin/sopvo/src/master/
 
 Abstruct:
 
