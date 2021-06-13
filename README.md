@@ -62,6 +62,14 @@ In folder ./config we provide two examples: kitti_1226.yaml and kitti_1241.yaml.
 5.4 Other datasets:
 Please wait for update.
 
+### Fly in simulation
+
+Please install our Gazebo simulation tool from: https://github.com/rduan036/E2ES.git
+
+````
+roslaunch sopvo sopvo_gazebo_sim.launch 
+````
+
 ### Maintainer:
 Ran Duan, ArcLab at PolyU, HK, China
 ran-sn.duan@connect.polyu.hk

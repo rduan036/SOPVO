@@ -233,8 +233,8 @@ bool F2FTracking::init_frame()
             curr_frame->landmarks.push_back(LandMarkInFrame(pts2d_img0.at(idx), Vec3(0,0,0), false, curr_frame->T_c_w));
         }
     }
-    cout << "frame " << frameCount;
-    cout << ": point could initialized, " << p3d_counter << " points have been generated. " << endl;
+    cout << "frame " << frameCount << " detect " << tmpKPs.size() << " points, ";
+    cout << p3d_counter << " 3D points have been generated. " << endl;
 
     if (p3d_counter < 2*MINIMUM_KEYPOINTS)
     {
