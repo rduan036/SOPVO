@@ -1,2 +1,2 @@
-### PS: This project has been move to: 
+### PS: This project has been moved to: 
 https://github.com/arclab-hku/SOPVO
