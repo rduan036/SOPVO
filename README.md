@@ -24,7 +24,7 @@ You should see the results below:
 <img src="results/sopvo_onboard.gif" width="600"> <br />
 <img src="results/qt_graph.png" width="1000"> <br />
 
-PS: two axis shwon in RVIZ are /mavros/vision_pose/pose (from sopvo) and /mavros/local_position/pose (from PX4 EKF), respectively. Please tuning your PX4 para, espectially EKF for better pose fusion performance.
+PS: the two axises shown in RVIZ are /mavros/vision_pose/pose (from sopvo) and /mavros/local_position/pose (from PX4 EKF), respectively. Please tuning your PX4 para, espectially EKF for better pose fusion performance.
 
 ### Maintainer:
 
