@@ -1,0 +1,36 @@
+#type_of_cam:
+#0---KITTI type (cam to body: T_body_cam0, T_body_cam1)
+#1---EuRoC type (cam to IMU: T_mavimu_cam0, T_mavimu_cam1, IMU to body: T_imu_mavimu)
+#2---T265
+type_of_cam: 0
+#for RGB-D camera, depth image is aligned to left cam0
+image_width: 640
+image_height: 360
+
+T_init:
+[0, 0, 1, 0,
+ -1, 0, 0, 0,
+ 0, -1, 0, 0,
+ 0, 0, 0, 1]
+
+T_world_body:
+[ 1.0,  0.0,  0.0,  0.0,
+  0.0,  1.0,  0.0,  0.0,
+  0.0,  0.0,  1.0,  0.0,
+  0.0,  0.0,  0.0,  1.0]
+
+cam0_intrinsics: [318.99005126953125, 318.99005126953125, 319.3412780761719, 182.22152709960938] #fx fy cx cy
+cam0_distortion_coeffs: [0.0, 0.0, 0.0, 0.0] #k1 k2 r1 r2
+T_body_cam0:
+[ 0.0,  0.0,    1,   0.0,
+   -1,  0.0,  0.0,   0.0,
+  0.0,   -1,  0.0,   0.0,
+  0.0,  0.0,  0.0,   1.0]
+
+T_cam0_cam1:
+[ 1.0,  0.0,  0.0,   0.05,
+  0.0,  1.0,  0.0,   0.0,
+  0.0,  0.0,  1.0,   0.0,
+  0.0,  0.0,  0.0,   1.0]
+
+

@@ -45,6 +45,7 @@ public:
     deque<ID_POSE> pose_records;
     CameraFrame::Ptr curr_frame,last_frame,last_keyframe;
     OrientationPri::Ptr myOrientationPri;
+    int sop_max_iter;
 
     void image_feed(const double time,
                     const cv::Mat img0_in,
@@ -57,12 +58,12 @@ public:
               const cv::Mat c0_cameraMatrix_in,
               const cv::Mat c0_distCoeffs_in,
               const SE3 T_i_c0_in,
-              const Vec4 vi_para=Vec4(0,0,0,0),
               const TYPEOFCAMERA cam_type_in=STEREO_EuRoC_MAV,
               const double cam_scale_in=1000.0,
               const cv::Mat c1_cameraMatrix_in = cv::Mat1d(3, 3),
               const cv::Mat c1_distCoeffs_in = cv::Mat1d(4, 1),
-              const SE3 T_c0_c1=SE3());
+              const SE3 T_c0_c1=SE3(),
+              const SE3 T_init=SE3());
 
 private:
     int MINIMUM_KEYPOINTS;
@@ -80,8 +81,8 @@ private:
     double sos_beta;
     double reprojectionErrorPessimistic;
     double reprojectionErrorOptimistic;
-    double depth_learning_rate;
-    double depth_difference_threshold;
+    double point_learning_rate;
+    double point_difference_threshold;
     bool init_frame(void);
     bool reset_keyframe(void);
     bool pnp_from_lastframe(void);
