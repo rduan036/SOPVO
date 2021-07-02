@@ -1,4 +1,4 @@
-### PS: This is a UAV onboard version, for testing off-line, kindly check our main project here: 
+### PS: This is a UAV onboard version. For off-line testing, kindly check our main project here: 
 https://github.com/arclab-hku/SOPVO
 
 ### Install (kinetic or melodic)
