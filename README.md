@@ -1,7 +1,7 @@
-### PS: This is a UAV onbaord version, for testing off line, kindly check our main project here: 
+### PS: This is a UAV onboard version, for testing off-line, kindly check our main project here: 
 https://github.com/arclab-hku/SOPVO
 
-### install (kinetic or melodic)
+### Install (kinetic or melodic)
 ````
 ./install_sopvo_XXXX.sh
 
@@ -10,7 +10,7 @@ cd YOUR_WORK_SPACE
 catkin_make
 ````
 
-### run demo (D435i)
+### Run demo (D435i)
 UAV platform: lattepanda + D435i. Please install realsense-ros first.
 
 ````
