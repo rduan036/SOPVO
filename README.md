@@ -27,7 +27,7 @@ You should see the results below:
 PS: the two axises shown in RVIZ are /mavros/vision_pose/pose (from sopvo) and /mavros/local_position/pose (from PX4 EKF), respectively. Please tuning your PX4 para, espectially EKF for better pose fusion performance.
 
 Stabilize and rotate:
-<img src="results/stabilize.gif" width="600"> <br /
+<img src="results/stabilize.gif" width="600"> <br />
 <img src="results/rotate.gif" width="600"> <br />
 
 ### Maintainer:
