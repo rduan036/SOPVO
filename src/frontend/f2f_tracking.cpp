@@ -539,7 +539,7 @@ void F2FTracking::image_feed(const double time,
                             curr_frame->landmarks.at(i).lmState = LMSTATE_NORMAL;
                             curr_frame->landmarks.at(i).lm_tracking_state = LM_TRACKING_INLIER;
                         }
-                        else if(err.norm() < reprojectionErrorOptimistic && err_measure.norm() < reprojectionErrorOptimistic && sosEnableFlag) // stereo orientation prior check
+                        else if(err.norm() < reprojectionErrorOptimistic && err_measure.norm() < reprojectionErrorOptimistic && curr_frame->validLMCount() < MINIMUM_KEYPOINTS && sosEnableFlag) // stereo orientation prior check
                         {
                             op_evaluate_counter ++;
                             Vec3 lm_c_update = (1 - point_learning_rate)*lm_c + point_learning_rate*lm_c_measure;
