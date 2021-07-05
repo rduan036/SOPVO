@@ -19,14 +19,16 @@ roslaunch sopvo sopvo_d435i.launch
 roslaunch sopvo px4.launch
 ````
 
-You should see the results below:
+You should see the results below: <br />
+
 <img src="results/rviz.png" width="1000"> <br />
 <img src="results/sopvo_test.gif" width="600"> <br />
 <img src="results/qt_graph.png" width="1000"> <br />
 
 PS: the two axises shown in RVIZ are /mavros/vision_pose/pose (from sopvo) and /mavros/local_position/pose (from PX4 EKF), respectively. Please tuning your PX4 para, espectially EKF for better pose fusion performance.
 
-Stabilize and rotate:
+Stabilize and rotate: <br />
+
 <img src="results/stabilize.gif" width="600"> <br />
 <img src="results/rotate.gif" width="600"> <br />
 
