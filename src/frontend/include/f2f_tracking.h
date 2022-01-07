@@ -42,6 +42,8 @@ public:
 
     SE3 T_c_w_last_keyframe;
     SE3 T_c_w_last_frame;
+    SE3 T_c_w_fusion_feedback;
+    bool fusion_pose_update;
     deque<ID_POSE> pose_records;
     CameraFrame::Ptr curr_frame,last_frame,last_keyframe;
     OrientationPri::Ptr myOrientationPri;
@@ -65,8 +67,6 @@ public:
               const SE3 T_c0_c1=SE3(),
               const SE3 T_init=SE3());
 
-    bool reset_keyframe(void);
-
 private:
     int MINIMUM_KEYPOINTS;
     int MAXIMUM_T_ERROR;
@@ -86,6 +86,8 @@ private:
     double point_learning_rate;
     double point_difference_threshold;
     bool init_frame(void);
+    bool reset_keyframe(void);
+    void landmark_updating(void);
     bool pnp_from_lastframe(void);
 };//class F2FTracking
 
