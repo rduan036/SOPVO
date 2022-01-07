@@ -65,6 +65,8 @@ public:
               const SE3 T_c0_c1=SE3(),
               const SE3 T_init=SE3());
 
+    bool reset_keyframe(void);
+
 private:
     int MINIMUM_KEYPOINTS;
     int MAXIMUM_T_ERROR;
@@ -84,7 +86,6 @@ private:
     double point_learning_rate;
     double point_difference_threshold;
     bool init_frame(void);
-    bool reset_keyframe(void);
     bool pnp_from_lastframe(void);
 };//class F2FTracking
 
