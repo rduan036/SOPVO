@@ -224,7 +224,6 @@ private:
         SE3 T_w_b_fusion = SE3(q.toRotationMatrix(), t);
         SE3 T_w_c = T_w_b_fusion * T_body_cam;
         this->cam_tracker->T_c_w_last_frame =  T_w_c.inverse();
-        this->cam_tracker->T_c_w_last_frame =  T_w_c.inverse();
         this->cam_tracker->fusion_pose_update = true;
     }
     
