@@ -1,5 +1,5 @@
 // This script contain the frame to frame keypoint detection/tracking/trignaulation and pose estimation processes
-// Duan Ran
+// Author: Duan Ran
 // AAE, PolyU, HK, China
 // rduan036@gmail.com
 
@@ -10,7 +10,7 @@
 using namespace std::chrono;
 using namespace cv;
 
-void F2FTracking::init(std::string configPath, const int w_in, const int h_in, const int w_out, const int h_out,
+void F2FTracking::init(const int w_in, const int h_in, const int w_out, const int h_out,
                        const Mat c0_cameraMatrix_in, const Mat c0_distCoeffs_in,
                        const SE3 T_i_c0_in,
                        const TYPEOFCAMERA cam_type_in,
@@ -19,59 +19,6 @@ void F2FTracking::init(std::string configPath, const int w_in, const int h_in, c
                        const SE3 T_c0_c1,
                        const SE3 T_init)
 {
-    // Loading the para file (which defined in launch file)
-    cv::FileStorage fsSettings(configPath, cv::FileStorage::READ);
-    if(!fsSettings.isOpened())
-    {
-        fsSettings.release();
-        while(true)
-        {
-            ros::Duration(1).sleep();
-            ROS_ERROR_STREAM("Wrong path for VO parameters input...");
-        }
-    }
-    else
-    {
-        MINIMUM_KEYPOINTS = fsSettings["sopvo.minimumKeypoint"];
-        MAXIMUM_T_ERROR = fsSettings["sopvo.maximumKeyframeShift"];
-        sosEnableFlag = true;
-        int temp_value = fsSettings["sopvo.sosEnableFlag"];
-        if (temp_value == 0)
-        {
-            sosEnableFlag = false;
-        }
-        sos_alpha = fsSettings["sopvo.sosAlphaForR"];
-        sos_beta = fsSettings["sopvo.sosBetaForT"];
-        sop_max_iter = fsSettings["sopvo.maxIter"];
-        reprojectionErrorPessimistic = fsSettings["sopvo.reprojectionErrorPessimistic"];
-        reprojectionErrorOptimistic = fsSettings["sopvo.reprojectionErrorOptimistic"];
-        point_learning_rate = fsSettings["sopvo.pointLearningRate"];
-        point_difference_threshold = fsSettings["sopvo.pointDifferenceThreshold"];
-        backendEnableFlag = false;
-        temp_value = fsSettings["sopvo.backendEnable"];
-        if (temp_value != 0)
-        {
-            backendEnableFlag = true;
-        }
-        BAenableFlag = false;
-        temp_value = fsSettings["sopvo.BAenable"];
-        if (temp_value != 0)
-        {
-            backendEnableFlag = true;
-        }
-        add_new_keypoints = false;
-        temp_value = fsSettings["sopvo.addNewKeypoint"];
-        if (temp_value != 0)
-        {
-            add_new_keypoints = true;
-        }
-        add_new_keypoints_once = false;
-        grid_w = fsSettings["feature.gridW"];
-        grid_h = fsSettings["feature.gridH"];
-        boundarySize = fsSettings["feature.boundaryBoxSize"];
-        nFeatures = fsSettings["feature.nFeatures"];
-    }
-    fsSettings.release();
     // initialize feature detection
     this->feature_dem   = new FeatureDEM(w_out,h_out,grid_w,grid_h,nFeatures,boundarySize);
     this->lkorb_tracker = new LKORBTracking(w_out,h_out);
@@ -125,7 +72,7 @@ void F2FTracking::init(std::string configPath, const int w_in, const int h_in, c
             // we first rectify the image raw output from rs_t265.launch 
             cv::fisheye::initUndistortRectifyMap(K0, D0, R0, P0, cv::Size(w_out,h_out), CV_32FC1, c0_RM[0], c0_RM[1]);
             cv::fisheye::initUndistortRectifyMap(K1, D1, R1, P1, cv::Size(w_out,h_out), CV_32FC1, c1_RM[0], c1_RM[1]);
-            // then resize the image and redo the rectification
+            // // then resize the image and redo the rectification
             // K0_rect = (cv::Mat_<double>(3,3) << 169.519821, 0.000000, 151.870868, 0.000000, 167.917718, 132.600913, 0.000000, 0.000000, 1.000000);
             // D0_rect = (cv::Mat1d(4, 1) << -0.003884, 0.007336, -0.002283, -0.001952);
             // K1_rect = (cv::Mat_<double>(3,3) << 169.392025, 0.000000, 150.805310, 0.000000, 167.969904, 137.542866, 0.000000, 0.000000, 1.000000);
@@ -188,7 +135,7 @@ bool F2FTracking::init_frame()
     this->feature_dem->fb_tracking(curr_frame->img0, curr_frame->img1, pts0, pts1);
     vector<cv::KeyPoint> tmpKPs;
     cv::KeyPoint::convert(pts0,tmpKPs);
-    cv::Ptr<cv::DescriptorExtractor> extractor = cv::ORB::create();
+    // cv::Ptr<cv::DescriptorExtractor> extractor = cv::ORB::create();
     pts2d_img0 = vcvP2f_2_vVec2(pts0);
     pts2d_img1 = vcvP2f_2_vVec2(pts1);
     // keypoint trignaulation
@@ -256,7 +203,7 @@ bool F2FTracking::reset_keyframe()
     this->feature_dem->fb_tracking(last_frame->img0, last_frame->img1, pts0, pts1);
     vector<cv::KeyPoint> tmpKPs;
     cv::KeyPoint::convert(pts0,tmpKPs);
-    cv::Ptr<cv::DescriptorExtractor> extractor = cv::ORB::create();
+    // cv::Ptr<cv::DescriptorExtractor> extractor = cv::ORB::create();
     pts2d_img0 = vcvP2f_2_vVec2(pts0);
     pts2d_img1 = vcvP2f_2_vVec2(pts1);
     int p3d_counter = 0;
@@ -508,16 +455,9 @@ void F2FTracking::image_feed(const double time,
                 }
             }
             //STEP2:
-            if(BAenableFlag)
+            if(enableLoopclosure)
             {
-                try
-                {
-                    OptimizeInFrame::optimize(*curr_frame); // BA process, currently not available
-                }
-                catch(const std::exception& e)
-                {
-                    cout << "BA failed..." << endl;
-                }
+                enableLoopclosure = false; // currently not available
             }
             
             try
